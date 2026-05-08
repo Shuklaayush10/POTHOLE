@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="hero-section d-flex align-items-center min-vh-100 position-relative overflow-hidden">
+    <!-- Background Elements -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    
+    <div class="container position-relative z-index-1">
+        <div class="row align-items-center">
+            <div class="col-lg-6 hero-text text-start pe-lg-5" data-aos="fade-up">
+                <span class="badge bg-primary bg-opacity-25 text-primary border border-primary border-opacity-50 px-3 py-2 rounded-pill mb-3 fw-medium font-inter shadow-sm">
+                    <i class="fa-solid fa-microchip me-1"></i> Next-Gen Smart City Platform
+                </span>
+                <h1 class="display-3 fw-bold text-gradient font-outfit mb-4 lh-sm">
+                    Detect & Repair<br>Road Hazards with AI.
+                </h1>
+                <p class="lead text-light opacity-75 mb-5 font-inter lh-base">
+                    Upload road images to our AI engine. We'll automatically detect potholes, estimate severity, suggest repairs, and map hotspots to keep cities safe.
+                </p>
+                <div class="d-flex gap-3 flex-wrap">
+                    <a href="{{ url_for('upload') }}" class="btn btn-primary btn-lg rounded-pill px-5 fw-semibold shadow-lg hover-lift">
+                        <i class="fa-solid fa-cloud-arrow-up me-2"></i> Report Pothole
+                    </a>
+                    <a href="{{ url_for('analytics') }}" class="btn btn-outline-light btn-lg rounded-pill px-5 fw-semibold hover-lift">
+                        <i class="fa-solid fa-map-location-dot me-2"></i> View Live Map
+                    </a>
+                </div>
+                
+                <div class="row mt-5 pt-4 border-top border-light border-opacity-10">
+                    <div class="col-4">
+                        <h3 class="text-primary fw-bold font-outfit mb-0">95%</h3>
+                        <p class="text-light opacity-50 small font-inter">Detection Accuracy</p>
+                    </div>
+                    <div class="col-4">
+                        <h3 class="text-info fw-bold font-outfit mb-0">&lt;2s</h3>
+                        <p class="text-light opacity-50 small font-inter">Processing Time</p>
+                    </div>
+                    <div class="col-4">
+                        <h3 class="text-success fw-bold font-outfit mb-0">24/7</h3>
+                        <p class="text-light opacity-50 small font-inter">Monitoring</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-6 mt-5 mt-lg-0" data-aos="zoom-in">
+                <div class="glass-card p-2 rounded-4 shadow-xl position-relative floating-animation">
+                    <div class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-danger shadow-lg p-2 fs-6">
+                        <i class="fa-solid fa-triangle-exclamation me-1"></i> Severe Hazard
+                    </div>
+                    <div class="position-absolute bottom-0 end-0 translate-middle badge rounded-pill bg-success shadow-lg p-2 fs-6 z-index-2" style="margin-right: -20px;">
+                        <i class="fa-solid fa-check-circle me-1"></i> Analyzed
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?auto=format&fit=crop&w=800&q=80" alt="Pothole AI Analysis" class="img-fluid rounded-3 border border-light border-opacity-10 w-100" style="object-fit: cover; height: 450px;">
+                    <!-- Overlay to simulate AI scanning -->
+                    <div class="scan-line"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="py-5 bg-darker">
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <h2 class="text-gradient font-outfit fw-bold mb-3">How It Works</h2>
+            <p class="text-light opacity-75 max-w-600 mx-auto">A simple, powerful pipeline to process road hazards from capture to repair recommendation.</p>
+        </div>
+        
+        <div class="row g-4 text-center">
+            <div class="col-md-3">
+                <div class="glass-card p-4 h-100 rounded-4 hover-lift">
+                    <div class="icon-box bg-primary bg-opacity-10 text-primary mb-4 mx-auto">
+                        <i class="fa-solid fa-camera fs-3"></i>
+                    </div>
+                    <h4 class="font-outfit fw-bold text-light">1. Capture</h4>
+                    <p class="text-light opacity-50 small">Take a photo of the road hazard and upload it to the platform.</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="glass-card p-4 h-100 rounded-4 hover-lift">
+                    <div class="icon-box bg-info bg-opacity-10 text-info mb-4 mx-auto">
+                        <i class="fa-solid fa-brain fs-3"></i>
+                    </div>
+                    <h4 class="font-outfit fw-bold text-light">2. Analyze</h4>
+                    <p class="text-light opacity-50 small">OpenCV algorithms detect the pothole and compute dimensions.</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="glass-card p-4 h-100 rounded-4 hover-lift">
+                    <div class="icon-box bg-warning bg-opacity-10 text-warning mb-4 mx-auto">
+                        <i class="fa-solid fa-scale-unbalanced fs-3"></i>
+                    </div>
+                    <h4 class="font-outfit fw-bold text-light">3. Evaluate</h4>
+                    <p class="text-light opacity-50 small">Severity is calculated based on area and depth proxy.</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="glass-card p-4 h-100 rounded-4 hover-lift">
+                    <div class="icon-box bg-success bg-opacity-10 text-success mb-4 mx-auto">
+                        <i class="fa-solid fa-truck-fast fs-3"></i>
+                    </div>
+                    <h4 class="font-outfit fw-bold text-light">4. Recommend</h4>
+                    <p class="text-light opacity-50 small">Actionable repair steps are generated for road authorities.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

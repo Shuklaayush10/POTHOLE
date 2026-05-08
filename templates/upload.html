@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5 mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="text-center mb-4">
+                <h2 class="text-gradient font-outfit fw-bold">Report a Pothole</h2>
+                <p class="text-light opacity-75">Upload an image of the road hazard for instant AI analysis.</p>
+            </div>
+            
+            <div class="glass-card p-5 rounded-4 shadow-lg border border-light border-opacity-10 text-center upload-area transition-all" id="uploadArea">
+                <form id="uploadForm" enctype="multipart/form-data">
+                    <input type="file" id="fileInput" name="file" class="d-none" accept="image/jpeg, image/png, image/jpg">
+                    
+                    <div id="uploadPrompt">
+                        <div class="icon-box bg-primary bg-opacity-10 text-primary mb-4 mx-auto" style="width: 80px; height: 80px; font-size: 2rem; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                        </div>
+                        <h4 class="font-outfit fw-bold text-light mb-2">Drag & Drop Image Here</h4>
+                        <p class="text-light opacity-50 small mb-4">or click to browse your files (JPG, PNG)</p>
+                        <button type="button" class="btn btn-primary rounded-pill px-4 fw-medium" id="browseBtn">
+                            Browse Files
+                        </button>
+                    </div>
+                    
+                    <div id="imagePreview" class="d-none">
+                        <img src="" alt="Preview" class="img-fluid rounded-3 mb-4 shadow-sm" style="max-height: 300px; object-fit: cover;">
+                        <div class="d-flex justify-content-center gap-3">
+                            <button type="button" class="btn btn-outline-light rounded-pill px-4" id="removeBtn">
+                                <i class="fa-solid fa-trash-can me-2"></i> Remove
+                            </button>
+                            <button type="submit" class="btn btn-success rounded-pill px-4 fw-medium shadow-lg" id="analyzeBtn">
+                                <i class="fa-solid fa-wand-magic-sparkles me-2"></i> Analyze Now
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Hidden location fields -->
+                    <input type="hidden" id="latInput" name="latitude">
+                    <input type="hidden" id="lngInput" name="longitude">
+                </form>
+            </div>
+            
+            <!-- Loading Overlay -->
+            <div id="loadingOverlay" class="d-none mt-4 text-center">
+                <div class="spinner-border text-primary mb-3" style="width: 3rem; height: 3rem;" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <h5 class="font-outfit text-light fw-medium">AI is analyzing the image...</h5>
+                <p class="text-light opacity-50 small">Detecting contours, estimating depth, and generating recommendations.</p>
+            </div>
+            
+            <div id="resultCard" class="d-none mt-5">
+                <!-- Content will be injected by JS -->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

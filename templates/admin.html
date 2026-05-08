@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5 mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="text-gradient font-outfit fw-bold mb-1">Admin Panel</h2>
+            <p class="text-light opacity-75 mb-0">System overview and complete detection history.</p>
+        </div>
+        <div class="glass-card px-4 py-2 rounded-pill border border-light border-opacity-10">
+            <span class="text-light opacity-75 me-2">Total Reports:</span>
+            <span class="font-outfit fw-bold text-primary fs-5">{{ reports|length }}</span>
+        </div>
+    </div>
+
+    <div class="glass-card rounded-4 p-0 overflow-hidden shadow-lg border border-light border-opacity-10">
+        <div class="table-responsive">
+            <table class="table table-dark table-hover mb-0 font-inter align-middle" style="background: transparent;">
+                <thead class="bg-dark bg-opacity-50">
+                    <tr>
+                        <th class="py-3 px-4 fw-medium border-bottom border-light border-opacity-10">ID</th>
+                        <th class="py-3 px-4 fw-medium border-bottom border-light border-opacity-10">Date</th>
+                        <th class="py-3 px-4 fw-medium border-bottom border-light border-opacity-10">Image</th>
+                        <th class="py-3 px-4 fw-medium border-bottom border-light border-opacity-10">Severity</th>
+                        <th class="py-3 px-4 fw-medium border-bottom border-light border-opacity-10">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for r in reports %}
+                    <tr class="border-bottom border-light border-opacity-10">
+                        <td class="px-4 text-light opacity-75">#{{ r.id }}</td>
+                        <td class="px-4 text-light opacity-75">{{ r.timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
+                        <td class="px-4">
+                            <img src="{{ url_for('uploaded_file', filename=r.original_image) }}" alt="Thumbnail" class="rounded" style="width: 50px; height: 50px; object-fit: cover;">
+                        </td>
+                        <td class="px-4">
+                            <span class="badge rounded-pill px-3 py-2
+                                {% if r.severity == 'SEVERE' %}bg-danger
+                                {% elif r.severity == 'MODERATE' %}bg-warning text-dark
+                                {% else %}bg-info text-dark{% endif %}">
+                                {{ r.severity }}
+                            </span>
+                        </td>
+                        <td class="px-4">
+                            <a href="{{ url_for('download_report', report_id=r.id) }}" class="btn btn-sm btn-outline-light rounded-pill">
+                                <i class="fa-solid fa-download me-1"></i> PDF
+                            </a>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="5" class="text-center py-5 text-light opacity-50">
+                            No reports in database yet.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

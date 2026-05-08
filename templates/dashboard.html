@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5 mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="text-gradient font-outfit fw-bold mb-1">Latest Detection</h2>
+            <p class="text-light opacity-75 mb-0">Analysis results for the most recently reported road hazard.</p>
+        </div>
+        {% if report %}
+        <a href="{{ url_for('download_report', report_id=report.id) }}" class="btn btn-outline-info rounded-pill px-4 hover-lift">
+            <i class="fa-solid fa-file-pdf me-2"></i> Download PDF
+        </a>
+        {% endif %}
+    </div>
+
+    {% if report %}
+    <div class="row g-4">
+        <!-- Images -->
+        <div class="col-lg-7">
+            <div class="glass-card p-3 rounded-4 h-100">
+                <ul class="nav nav-pills mb-3 gap-2" id="pills-tab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active rounded-pill px-4" id="pills-processed-tab" data-bs-toggle="pill" data-bs-target="#pills-processed" type="button" role="tab">AI Analysis</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link rounded-pill px-4" id="pills-original-tab" data-bs-toggle="pill" data-bs-target="#pills-original" type="button" role="tab">Original</button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-processed" role="tabpanel">
+                        <img src="{{ url_for('processed_file', filename=report.processed_image) }}" class="img-fluid rounded-3 w-100 shadow" alt="Processed Image" style="max-height: 500px; object-fit: contain; background: #000;">
+                    </div>
+                    <div class="tab-pane fade" id="pills-original" role="tabpanel">
+                        <img src="{{ url_for('uploaded_file', filename=report.original_image) }}" class="img-fluid rounded-3 w-100 shadow" alt="Original Image" style="max-height: 500px; object-fit: contain; background: #000;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Metrics -->
+        <div class="col-lg-5">
+            <div class="row g-3 h-100 align-content-start">
+                <div class="col-12">
+                    <div class="glass-card p-4 rounded-4 position-relative overflow-hidden">
+                        <div class="position-absolute top-0 end-0 p-3 opacity-10">
+                            <i class="fa-solid fa-triangle-exclamation" style="font-size: 5rem;"></i>
+                        </div>
+                        <h6 class="text-light opacity-75 font-inter mb-1">Severity Level</h6>
+                        <h2 class="font-outfit fw-bold mb-0 {% if report.severity == 'SEVERE' %}text-danger{% elif report.severity == 'MODERATE' %}text-warning{% else %}text-info{% endif %}">
+                            {{ report.severity }}
+                        </h2>
+                    </div>
+                </div>
+                
+                <div class="col-6">
+                    <div class="glass-card p-3 rounded-4 text-center">
+                        <i class="fa-solid fa-chart-area text-primary mb-2 fs-4"></i>
+                        <h6 class="text-light opacity-75 font-inter small mb-1">Damage Area</h6>
+                        <h4 class="font-outfit fw-bold text-light mb-0">{{ "%.0f"|format(report.area) }} <span class="fs-6 opacity-50">px&sup2;</span></h4>
+                    </div>
+                </div>
+                
+                <div class="col-6">
+                    <div class="glass-card p-3 rounded-4 text-center">
+                        <i class="fa-solid fa-layer-group text-info mb-2 fs-4"></i>
+                        <h6 class="text-light opacity-75 font-inter small mb-1">Depth Proxy</h6>
+                        <h4 class="font-outfit fw-bold text-light mb-0">{{ "%.1f"|format(report.depth_proxy) }} <span class="fs-6 opacity-50">int</span></h4>
+                    </div>
+                </div>
+                
+                <div class="col-12 mt-4">
+                    <h5 class="font-outfit fw-bold text-light mb-3">AI Recommendation</h5>
+                    <div class="glass-card p-4 rounded-4 border-start border-4 {% if report.severity == 'SEVERE' %}border-danger{% elif report.severity == 'MODERATE' %}border-warning{% else %}border-info{% endif %}">
+                        <div class="d-flex align-items-start">
+                            <div class="me-3 mt-1 text-success">
+                                <i class="fa-solid fa-screwdriver-wrench fs-4"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-light font-inter fw-medium mb-1">{{ report.recommendation }}</h5>
+                                <p class="text-light opacity-50 small mb-0">Recommended action based on severity analysis.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-12 mt-3">
+                    <div class="d-flex align-items-center text-light opacity-50 small font-inter">
+                        <i class="fa-regular fa-clock me-2"></i> Analyzed on {{ report.timestamp.strftime('%B %d, %Y at %I:%M %p') }}
+                    </div>
+                    {% if report.latitude %}
+                    <div class="d-flex align-items-center text-light opacity-50 small font-inter mt-1">
+                        <i class="fa-solid fa-location-dot me-2"></i> Lat: {{ "%.4f"|format(report.latitude) }}, Lng: {{ "%.4f"|format(report.longitude) }}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="glass-card p-5 rounded-4 text-center text-light opacity-75">
+        <i class="fa-solid fa-folder-open mb-3" style="font-size: 3rem;"></i>
+        <h4>No reports found</h4>
+        <p>Upload an image to see the dashboard.</p>
+        <a href="{{ url_for('upload') }}" class="btn btn-primary mt-2">Go to Upload</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

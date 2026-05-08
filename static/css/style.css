@@ -1,0 +1,153 @@
+:root {
+    --primary: #4F46E5;
+    --primary-glow: rgba(79, 70, 229, 0.5);
+    --secondary: #10B981;
+    --dark-bg: #0B0F19;
+    --darker-bg: #05080F;
+    --glass-bg: rgba(15, 23, 42, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.08);
+}
+
+body.dark-theme {
+    background-color: var(--dark-bg);
+    color: #F8FAFC;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.text-gradient {
+    background: linear-gradient(to right, #818CF8, #C084FC);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.bg-darker {
+    background-color: var(--darker-bg);
+}
+
+.glassmorphism {
+    background: rgba(11, 15, 25, 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.glassmorphism-dark {
+    background: var(--darker-bg);
+    border-top: 1px solid var(--glass-border);
+}
+
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+}
+
+.hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5), 0 0 20px var(--primary-glow);
+}
+
+.transition-all {
+    transition: all 0.3s ease;
+}
+
+/* Typography */
+.font-inter { font-family: 'Inter', sans-serif; }
+.font-outfit { font-family: 'Outfit', sans-serif; }
+.tracking-tight { letter-spacing: -0.025em; }
+
+/* Upload Area */
+.upload-area {
+    border: 2px dashed rgba(255, 255, 255, 0.2) !important;
+    cursor: pointer;
+}
+.upload-area:hover, .upload-area.dragover {
+    border-color: var(--primary) !important;
+    background: rgba(79, 70, 229, 0.05);
+}
+
+/* Animations */
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+    100% { transform: translateY(0px); }
+}
+
+.floating-animation {
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes scan {
+    0% { top: 0; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { top: 100%; opacity: 0; }
+}
+
+.scan-line {
+    position: absolute;
+    width: 100%;
+    height: 4px;
+    background: var(--primary);
+    box-shadow: 0 0 15px var(--primary), 0 0 30px var(--primary);
+    top: 0;
+    left: 0;
+    animation: scan 3s linear infinite;
+    z-index: 5;
+    opacity: 0;
+}
+
+/* Background Blobs */
+.blob {
+    position: absolute;
+    filter: blur(80px);
+    z-index: 0;
+    opacity: 0.4;
+    border-radius: 50%;
+}
+.blob-1 {
+    width: 400px;
+    height: 400px;
+    background: var(--primary);
+    top: -100px;
+    left: -100px;
+}
+.blob-2 {
+    width: 500px;
+    height: 500px;
+    background: #8B5CF6;
+    bottom: -150px;
+    right: -150px;
+}
+
+/* Buttons */
+.btn-primary {
+    background: linear-gradient(135deg, #4F46E5, #6366F1);
+    border: none;
+}
+.btn-primary:hover {
+    background: linear-gradient(135deg, #4338CA, #4F46E5);
+}
+
+.z-index-1 { z-index: 1; }
+.z-index-2 { z-index: 2; }
+.max-w-600 { max-width: 600px; }
+
+/* Leaflet Dark mode overrides */
+.leaflet-container {
+    background: var(--dark-bg);
+}
+.leaflet-layer,
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out,
+.leaflet-control-attribution {
+    filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
+}

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid px-4 py-5 mt-5">
+    <div class="text-center mb-4">
+        <h2 class="text-gradient font-outfit fw-bold">Geolocation Analytics</h2>
+        <p class="text-light opacity-75">Interactive map and heatmap of reported potholes.</p>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="glass-card rounded-4 p-2 h-100 position-relative shadow-lg border border-light border-opacity-10">
+                <div id="map" class="rounded-3 w-100" style="height: 600px; z-index: 1;"></div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="glass-card p-4 rounded-4 mb-4 shadow-lg border border-light border-opacity-10">
+                <h5 class="font-outfit fw-bold text-light mb-3">Map Controls</h5>
+                <div class="form-check form-switch mb-3">
+                    <input class="form-check-input" type="checkbox" id="toggleHeatmap" checked>
+                    <label class="form-check-label text-light opacity-75" for="toggleHeatmap">Show Heatmap</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="toggleMarkers" checked>
+                    <label class="form-check-label text-light opacity-75" for="toggleMarkers">Show Pothole Markers</label>
+                </div>
+            </div>
+
+            <div class="glass-card p-4 rounded-4 shadow-lg border border-light border-opacity-10">
+                <h5 class="font-outfit fw-bold text-light mb-3">Severity Distribution</h5>
+                <div style="height: 250px;">
+                    <canvas id="severityChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="glass-card p-4 rounded-4 mt-4 shadow-lg border border-light border-opacity-10">
+                 <h5 class="font-outfit fw-bold text-light mb-3">Recent Reports</h5>
+                 <div id="recentReportsList" class="overflow-auto" style="max-height: 150px;">
+                    <!-- Populated by JS -->
+                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
